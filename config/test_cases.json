@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "expected_behavior": "Chatbot trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu, tự động phát sinh Tool Call 'academic_query' với mã SV2026001.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "single_tool_query",
+    "question": "Hãy kiểm tra trạng thái nhiệt độ hiện tại của cảm biến DHT22 trên thiết bị IoT ESP32-WROOM.",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu cảm biến, tự động phát sinh Tool Call 'iot_sensor_query' với tên thiết bị ESP32-WROOM và loại cảm biến DHT22.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Tôi cần theo dõi độ ẩm đất của cảm biến ở khu vực vườn A, nếu độ ẩm dưới 30% thì hãy đặt lịch hẹn tư vấn về hệ thống tưới tự động.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: Tra cứu dữ liệu độ ẩm đất từ cảm biến IoT trước, sau đó dựa trên kết quả quan sát được mà quyết định có tiến hành đặt lịch hẹn tư vấn hệ thống tưới tự động hay không.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu dữ liệu từ thiết bị IoT có mã DEV9999999.",
+    "expected_behavior": "Agent nhận kết quả NOT_FOUND từ Tool và đưa ra phản hồi lịch sự, chính xác không bịa đặt dữ liệu thiết bị.",
+    "complexity": "Medium"
+  }
+]

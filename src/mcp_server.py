@@ -31,15 +31,14 @@ class MCPAcademicServer:
         [TASK 2.1] HỌC VIÊN HOÀN THIỆN HÀM THỰC THI TOOL TRÊN MCP SERVER
         Thực thi request gọi Tool theo chuẩn MCP JSON-RPC
         """
-        # --------------------------------------------------------------------------
-        # TODO 2.1: HỌC VIÊN HOÀN THIỆN HÀM GỌI TOOL CHUẨN MCP JSON-RPC
-        # 🎯 YÊU CẦU THỰC THI THUẬT TOÁN:
-        # 1. Gọi hàm dispatch_tool_call(tool_name, arguments) để lấy chuỗi JSON kết quả từ Tool Router.
-        # 2. Chuyển đổi chuỗi JSON kết quả thành Python Dictionary (dùng json.loads).
-        # 3. Đóng gói phản hồi và trả về Dict theo đúng chuẩn giao thức MCP JSON-RPC 2.0:
-        #    - Các trường bắt buộc: "jsonrpc": "2.0", "server": self.server_name, "tool": tool_name, "result": content
-        # --------------------------------------------------------------------------
-        return {}
+        result_str = dispatch_tool_call(tool_name, arguments)
+        result = json.loads(result_str)
+        return {
+            "jsonrpc": "2.0",
+            "server": self.server_name,
+            "tool": tool_name,
+            "result": result
+        }
 
 
 if __name__ == "__main__":
@@ -59,10 +58,16 @@ if __name__ == "__main__":
     else:
         print("✅ [TODO 1.2]: Tool 'schedule_appointment' đã có schema đầy đủ.")
 
+    iot_tool = next((t for t in tools if t.get("name") == "iot_sensor_query"), None)
+    if iot_tool and not iot_tool.get("parameters", {}).get("properties"):
+        print("⏳ [TODO 1.2]: Tool 'iot_sensor_query' chưa được định nghĩa properties trong 'src/tools.py'.")
+    else:
+        print("✅ [TODO 1.2]: Tool 'iot_sensor_query' đã có schema đầy đủ.")
+
     # Kiểm tra trạng thái TODO 2.1 (call_tool)
-    test_result = server.call_tool("academic_query", {"student_id": "SV2026001"})
-    if not test_result:
+    test_result = server.call_tool("iot_sensor_query", {"device_id": "DEV0000001"})
+    if not test_result or not test_result.get("result"):
         print("⏳ [TODO 2.1]: Hàm call_tool() đang trả về rỗng. Học viên hãy hoàn thiện TODO 2.1 trong 'src/mcp_server.py'!")
     else:
-        print(f"✅ [TODO 2.1]: Test dispatch tool 'academic_query' thành công:")
+        print(f"✅ [TODO 2.1]: Test dispatch tool 'iot_sensor_query' thành công:")
         print(f"   Phản hồi JSON-RPC: {json.dumps(test_result, ensure_ascii=False)}")

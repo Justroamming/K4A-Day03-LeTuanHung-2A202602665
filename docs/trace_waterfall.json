@@ -3,9 +3,9 @@
     "step": 1,
     "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Chào bạn! Dưới đây là tóm tắt những quy chế và quy định học vụ cơ bản tại **Đại học VinUni (VinUniversity)**:\n\n---\n\n### 1. Ngôn ngữ giảng dạy & Chuẩn đầu ra\n* **Ngôn ngữ chính thức:** 100% các chương trình đào tạo tại VinUni được giảng dạy và đánh giá bằng **tiếng Anh**.\n* **Chuẩn tiếng Anh:** Sinh viên cần đạt chuẩn tiếng Anh đầu vào (hoặc hoàn thành chương trình Pathway English) và duy trì năng lực ngoại ngữ trong suốt quá trình học.\n\n---\n\n### 2. Hệ thống Tín chỉ & Thang điểm (GPA)\n* **Thang điểm:** Sử dụng thang điểm **4.0** (A = 4.0, B = 3.0, C = 2.0, D = 1.0, F = 0.0).\n* **Đánh giá học tập:** \n  * **GPA (Grade Point Average):** Điểm trung bình học kỳ.\n  * **CGPA (Cumulative Grade Point Average):** Điểm trung bình tích lũy toàn khóa.\n\n---\n\n### 3. Cảnh báo Học tập (Academic Probation) & Buộc thôi học\n* **Cảnh báo học tập:** Sinh viên có CGPA rơi xuống dưới mức tối thiểu quy định (thường là dưới **2.0/4.0**) trong một học kỳ sẽ nhận cảnh báo học tập.\n* **Xử lý vi phạm/Kém học lực:** Nếu không nâng cao CGPA sau thời gian cảnh báo hoặc vi phạm nghiêm trọng quy chế, sinh viên có thể bị đình chỉ học tập hoặc buộc thôi học.\n\n---\n\n### 4. Liêm chính Học thuật (Academic Integrity)\n* VinUni áp dụng chính sách **Zero Tolerance (Không khoan nhượng)** đối với các hành vi vi phạm liêm chính học thuật như:\n  * Đạo văn (Plagiarism)\n  * Gian lận trong thi cử/bài tập\n  * Hợp thức hóa hoặc làm giả dữ liệu, tài liệu học thuật.\n\n---\n\n### 5. Điều kiện Tốt nghiệp\nĐể đủ điều kiện tốt nghiệp, sinh viên cần:\n1. Hoàn thành đầy đủ tổng số tín chỉ tích lũy theo chương trình đào tạo của viện/ngành.\n2. Đạt chỉ số **CGPA tối thiểu (từ 2.0/4.0 trở lên)**.\n3. Hoàn thành Kỳ thực tập (Internship), Đồ án/Dự án tốt nghiệp (Capstone Project).\n4. Thỏa mãn các yêu cầu về chuẩn đầu ra ngoại ngữ, kỹ năng mềm và điểm rèn luyện theo quy định.\n\n---\n\n*Lưu ý: Nếu bạn là sinh viên VinUni và muốn tra cứu thông tin học vụ cá nhân cụ thể, vui lòng cung cấp **Mã sinh viên (Student ID)** để mình hỗ trợ tra cứu chi tiết nhé!*",
+    "latency_ms": 12671.28
   },
   {
     "step": 1,
@@ -15,15 +15,79 @@
     "arguments": {
       "student_id": "SV2026001"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "student_id": "SV2026001",
+      "data": {
+        "full_name": "Nguyễn Văn An",
+        "class": "AI-K4",
+        "gpa": 3.85,
+        "email": "an.nv@vinuni.edu.vn",
+        "status": "Đang học",
+        "advisor": "PGS.TS Nguyễn Văn A"
+      }
+    },
+    "latency_ms": 4326.08
   },
   {
     "step": 2,
     "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
-    "latency_ms": 10.0
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Thông tin học vụ của sinh viên **SV2026001** như sau:\n\n* **Họ và tên:** Nguyễn Văn An\n* **Mã sinh viên:** SV2026001\n* **Lớp:** AI-K4\n* **Điểm trung bình (GPA):** 3.85\n* **Email:** an.nv@vinuni.edu.vn\n* **Trạng thái học tập:** Đang học\n* **Cố vấn học tập:** PGS.TS Nguyễn Văn A",
+    "latency_ms": 5060.03
+  },
+  {
+    "step": 1,
+    "query": "Hãy kiểm tra trạng thái nhiệt độ hiện tại của cảm biến DHT22 trên thiết bị IoT ESP32-WROOM.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "iot_sensor_query",
+    "arguments": {
+      "device_id": "ESP32-WROOM",
+      "sensor_type": "DHT22"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy thiết bị IoT có mã 'ESP32-WROOM'"
+    },
+    "latency_ms": 5725.04
+  },
+  {
+    "step": 2,
+    "query": "Hãy kiểm tra trạng thái nhiệt độ hiện tại của cảm biến DHT22 trên thiết bị IoT ESP32-WROOM.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Không tìm thấy thiết bị IoT nào có mã **ESP32-WROOM** trong hệ thống. \n\nVui lòng kiểm tra lại mã thiết bị (ví dụ: `DEV0000001`) và cung cấp lại mã chính xác để tôi có thể hỗ trợ tra cứu dữ liệu nhiệt độ từ cảm biến DHT22 cho bạn.",
+    "latency_ms": 6066.92
+  },
+  {
+    "step": 1,
+    "query": "Tôi cần theo dõi độ ẩm đất của cảm biến ở khu vực vườn A, nếu độ ẩm dưới 30% thì hãy đặt lịch hẹn tư vấn về hệ thống tưới tự động.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Để kiểm tra độ ẩm đất và tiến hành đặt lịch hẹn tư vấn hệ thống tưới tự động nếu cần, bạn vui lòng cung cấp thêm thông tin:\n\n1. **Mã thiết bị IoT (device_id)** của cảm biến ở khu vực vườn A (ví dụ: `DEV0000001`).\n2. **Thời gian mong muốn đặt lịch** và **tên chuyên gia tư vấn** (nếu độ ẩm dưới 30% và cần đặt lịch ngay).",
+    "latency_ms": 6137.89
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu dữ liệu từ thiết bị IoT có mã DEV9999999.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "iot_sensor_query",
+    "arguments": {
+      "device_id": "DEV9999999"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy thiết bị IoT có mã 'DEV9999999'"
+    },
+    "latency_ms": 2464.43
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu dữ liệu từ thiết bị IoT có mã DEV9999999.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Thiết bị không tìm thấy, thông báo cho người dùng và kết thúc.",
+    "output": "Kết quả cho thấy thiết bị IoT không tồn tại trong hệ thống. Vui lòng kiểm tra lại mã thiết bị và thử lại.",
+    "latency_ms": 2714.0
   }
 ]

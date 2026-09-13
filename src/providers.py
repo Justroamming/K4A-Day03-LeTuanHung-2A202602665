@@ -37,27 +37,91 @@ class MockOfflineProvider(BaseLLMProvider):
     def generate_with_tools(self, prompt: str, tools_schema: List[Dict[str, Any]], system_prompt: str = "") -> Dict[str, Any]:
         prompt_lower = prompt.lower()
         
-        # Mô phỏng nhận diện intent gọi Tool
-        if "sv2026001" in prompt_lower and "đặt lịch" in prompt_lower:
+        has_observation = any(kw in prompt_lower for kw in ["observation", "obs_data", "sensor_data", "device_name", "soil_moisture", "temperature", "humidity", "booking_id", "not_found", "không tìm thấy"])
+        
+        if has_observation:
+            if "booking_id" in prompt_lower:
+                return {
+                    "type": "text",
+                    "content": "Đặt lịch tư vấn thành công. Vui lòng kiểm tra email để xác nhận lịch hẹn.",
+                    "thought": "Lịch hẹn đã được xác nhận, thông báo cho người dùng."
+                }
+            if "not_found" in prompt_lower or "không tìm thấy" in prompt_lower:
+                return {
+                    "type": "text",
+                    "content": "Kết quả cho thấy thiết bị IoT không tồn tại trong hệ thống. Vui lòng kiểm tra lại mã thiết bị và thử lại.",
+                    "thought": "Thiết bị không tìm thấy, thông báo cho người dùng và kết thúc."
+                }
+            if "soil_moisture" in prompt_lower or "độ ẩm" in prompt_lower:
+                if '"soil_moisture": 25' in prompt_lower or '"soil_moisture":25' in prompt_lower:
+                    return {
+                        "type": "tool_call",
+                        "tool_name": "schedule_appointment",
+                        "arguments": {"device_id": "DEV0000001", "datetime_str": "14:00 15/09/2026", "expert_name": "PGS.TS Nguyễn Văn A"},
+                        "thought": "Độ ẩm đất dưới 30%, cần đặt lịch hẹn tư vấn hệ thống tưới tự động."
+                    }
+                else:
+                    return {
+                        "type": "text",
+                        "content": "Độ ẩm đất hiện tại ở mức 45% (đạt yêu cầu ≥30%). Không cần đặt lịch tư vấn hệ thống tưới tự động tại thời điểm này. Đề xuất tiếp tục theo dõi định kỳ.",
+                        "thought": "Độ ẩm đất đạt yêu cầu, không cần hành động thêm."
+                    }
+            if "sensor_data" in prompt_lower or "device_name" in prompt_lower:
+                return {
+                    "type": "text",
+                    "content": "Đã nhận đầy đủ dữ liệu cảm biến IoT. Cảm biến đang hoạt động bình thường, dữ liệu đã được cập nhật.",
+                    "thought": "Đã có đủ dữ liệu cảm biến, tổng hợp kết quả cho người dùng."
+                }
+            return {
+                "type": "text",
+                "content": "Đã xử lý xong yêu cầu. Dưới đây là kết quả tổng hợp.",
+                "thought": "Đã có đủ dữ liệu, tổng hợp kết quả cho người dùng."
+            }
+        
+        if "cảm biến" in prompt_lower or "sensor" in prompt_lower or "nhiệt độ" in prompt_lower or "độ ẩm" in prompt_lower or "iot" in prompt_lower:
+            if "dev9999999" in prompt_lower:
+                return {
+                    "type": "tool_call",
+                    "tool_name": "iot_sensor_query",
+                    "arguments": {"device_id": "DEV9999999"},
+                    "thought": "Người dùng muốn tra cứu dữ liệu từ thiết bị IoT có mã DEV9999999. Tôi sẽ gọi tool iot_sensor_query."
+                }
+            elif "độ ẩm" in prompt_lower or "soil" in prompt_lower or "tưới" in prompt_lower:
+                return {
+                    "type": "tool_call",
+                    "tool_name": "iot_sensor_query",
+                    "arguments": {"device_id": "DEV0000001", "sensor_type": "soil_moisture"},
+                    "thought": "Người dùng muốn kiểm tra độ ẩm đất. Tôi sẽ gọi tool iot_sensor_query với sensor_type soil_moisture."
+                }
+            else:
+                return {
+                    "type": "tool_call",
+                    "tool_name": "iot_sensor_query",
+                    "arguments": {"device_id": "DEV0000001", "sensor_type": "DHT22"},
+                    "thought": "Người dùng muốn kiểm tra trạng thái cảm biến trên thiết bị IoT. Tôi sẽ gọi tool iot_sensor_query."
+                }
+        
+        if "đặt lịch" in prompt_lower and ("iot" in prompt_lower or "tưới" in prompt_lower or "cảm biến" in prompt_lower or "độ ẩm" in prompt_lower):
             return {
                 "type": "tool_call",
                 "tool_name": "schedule_appointment",
-                "arguments": {"student_id": "SV2026001", "datetime_str": "14:00 15/09/2026", "advisor_name": "PGS.TS Nguyễn Văn A"},
-                "thought": "Người dùng yêu cầu đặt lịch hẹn tư vấn cho sinh viên SV2026001. Tôi sẽ gọi tool schedule_appointment."
+                "arguments": {"device_id": "DEV0000001", "datetime_str": "14:00 15/09/2026", "expert_name": "PGS.TS Nguyễn Văn A"},
+                "thought": "Người dùng yêu cầu đặt lịch tư vấn hệ thống IoT. Tôi sẽ gọi tool schedule_appointment."
             }
-        elif "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
+        
+        if "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
             return {
                 "type": "tool_call",
                 "tool_name": "academic_query",
                 "arguments": {"student_id": "SV2026001"},
                 "thought": "Người dùng muốn tra cứu thông tin học vụ của sinh viên SV2026001. Tôi sẽ gọi tool academic_query."
             }
-        else:
-            return {
-                "type": "text",
-                "content": f"[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-                "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool."
-            }
+        
+        return {
+            "type": "text",
+            "content": "[Mock Agent Response]: Xin chào! Tôi là trợ lý IoT thông minh của VinUni.",
+            "thought": "Câu hỏi chung, trả lời trực tiếp."
+        }
 
 
 class GeminiProvider(BaseLLMProvider):
